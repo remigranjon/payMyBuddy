@@ -1,0 +1,9 @@
+# Ignorer les fichiers de sauvegarde de la base de données
+/backups/*
+
+# Ignorer les fichiers et dossiers spécifiques à IntelliJ IDEA
+/.idea/
+/.idea/*
+
+# Ignorer les fichiers de configuration sensibles
+.env
