@@ -1,18 +1,11 @@
--- Création de la base de données
 CREATE DATABASE pay_my_buddy;
-
--- Connexion à la base de données
 \c pay_my_buddy;
-
--- Création de la table users
 CREATE TABLE users (
                        id BIGSERIAL PRIMARY KEY,
                        username VARCHAR(255) NOT NULL UNIQUE,
                        email VARCHAR(255) NOT NULL UNIQUE,
                        password VARCHAR(255) NOT NULL
 );
-
--- Création de la table transactions
 CREATE TABLE transactions (
                               id BIGSERIAL PRIMARY KEY,
                               sender_id BIGINT NOT NULL,
@@ -22,8 +15,6 @@ CREATE TABLE transactions (
                               CONSTRAINT fk_sender FOREIGN KEY (sender_id) REFERENCES users (id),
                               CONSTRAINT fk_receiver FOREIGN KEY (receiver_id) REFERENCES users (id)
 );
-
--- Création de la table connections
 CREATE TABLE connections (
                              id BIGSERIAL PRIMARY KEY,
                              user_id BIGINT NOT NULL,

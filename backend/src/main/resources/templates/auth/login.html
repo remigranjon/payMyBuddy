@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayMyBuddy - Register</title>
+</head>
+<body>
+    <form th:action="@{/auth/login}" th:object="${loginRequest}" method="post">
+
+    <label for="username">Email :</label>
+    <input type="email" id="username" th:field="*{username}" placeholder="Email" />
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" th:field="*{password}" placeholder="Mot de passe" />
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+    <button type="submit">Se connecter</button>
+</form>
+</body>
+</html>
