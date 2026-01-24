@@ -18,9 +18,9 @@
         </div>
     </div>
     <div class="mediumBlank"></div>
-    <form th:action="@{/transfer}" th:object="${transferRequest}" method="post" class="row rowCenter">
-        <select name="connection" id="connection" th:field="*{connection}" class="authField" required>
-            <option value="" disabled selected>Sélectionner une relation</option>
+    <form th:action="@{/transfer}" th:object="${transactionRequest}" method="post" class="row rowCenter">
+        <select name="receiverId" id="receiverId" th:field="*{receiverId}" class="authField" required>
+            <!-- <option value="" disabled selected>Sélectionner une relation</option> -->
             <option th:each="conn : ${connections}" th:value="${conn.id}" th:text="${conn.username}"></option>
         </select>
         <div class="mediumBlank"></div>
@@ -43,10 +43,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="transfer : ${transfers}">
-                <td th:text="${transfer.connection.username}"></td>
-                <td th:text="${transfer.description}"></td>
-                <td th:text="${transfer.amount}" class="euros"></td>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.receiver.username}"></td>
+                <td th:text="${transaction.description}"></td>
+                <td th:text="${transaction.amount}" class="euros"></td>
             </tr>
         </tbody>
     </table>

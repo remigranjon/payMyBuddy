@@ -107,11 +107,6 @@ public class UserService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
-        /* String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        if (!user.getPassword().matches(regex)) {
-            throw new IllegalArgumentException(
-                    "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character");
-        } */
     }
 
     public void updatePassword(String username, String currentPassword, String newPassword) {
@@ -131,10 +126,17 @@ public class UserService {
     public void addCredit(String username, double amount) throws Exception {
         try {
             User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
+            if (user.getCredit() + amount < 0) {
+                throw new Exception("Insufficient credit");
+            }
             user.setCredit(user.getCredit() + amount);
             userRepository.save(user);
         } catch (DataAccessException e) {
             throw new Exception("Error updating user credit");
         }
+    }
+
+    public User findById(int senderId) {
+        return userRepository.findById(senderId).orElseThrow();
     }
 }
