@@ -65,7 +65,7 @@ public class AuthController {
             } else {
                 log.info("No user is authenticated.");
             }
-            return "redirect:/home"; // Redirige après succès
+            return "redirect:/profile"; // Redirige après succès
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "auth/login";

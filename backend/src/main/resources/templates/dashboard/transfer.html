@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayMyBuddy - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="navigation">
+        <p>Pay my Buddy</p>
+        <div>
+            <a href="/transfer" class="selected">Transférer</a>
+            <a href="/profile" >Profil</a>
+            <a href="/connection" >Ajouter Relation</a>
+            <a href="/addCredit">Ajouter Crédit</a>
+            <a href="/logout">Se Déconnecter</a>
+        </div>
+    </div>
+    <div class="mediumBlank"></div>
+    <form th:action="@{/transfer}" th:object="${transferRequest}" method="post" class="row rowCenter">
+        <select name="connection" id="connection" th:field="*{connection}" class="authField" required>
+            <option value="" disabled selected>Sélectionner une relation</option>
+            <option th:each="conn : ${connections}" th:value="${conn.id}" th:text="${conn.username}"></option>
+        </select>
+        <div class="mediumBlank"></div>
+        <input type="text" id="description" th:field="*{description}" placeholder="Description" class="authField" required />
+        <div class="mediumBlank"></div>
+        <input type="number" step="0.01" min="0" id="amount" th:field="*{amount}" placeholder="Saisir un montant" class="authField euros" required />
+        <div class="mediumBlank"></div>
+        <div class="mediumBlank"></div>
+        <button type="submit" class="button">Payer</button>
+    </form>
+    <div class="mediumBlank"></div>
+    <h2>Mes transactions</h2>
+    <div class="mediumBlank"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Relation</th>
+                <th>Description</th>
+                <th>Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transfer : ${transfers}">
+                <td th:text="${transfer.connection.username}"></td>
+                <td th:text="${transfer.description}"></td>
+                <td th:text="${transfer.amount}" class="euros"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

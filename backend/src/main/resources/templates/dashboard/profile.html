@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayMyBuddy - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+    <div class="navigation">
+        <p>Pay my Buddy</p>
+        <div>
+            <a href="/transfer">Transférer</a>
+            <a href="/profile" class="selected">Profil</a>
+            <a href="/connection">Ajouter Relation</a>
+            <a href="/addCredit">Ajouter Crédit</a>
+            <a href="/logout">Se Déconnecter</a>
+        </div>
+    </div>
+    <div class="mediumBlank"></div>
+    <div class="main column">
+        <div class="column align-left">
+
+            <div class="row">
+                <div class="column bold width200px align-left">
+                    <p>Username</p>
+                    <p>Mail</p>
+                </div>
+                <div class="column width200px align-left">
+                    <p th:text="${user.username}"></p>
+                    <p th:text="${user.email}"></p>
+                </div>
+            </div>
+            <div class="mediumBlank"></div>
+            
+            <a href="/updatePassword" class="button">Modifier le mot de passe</a>
+            <p th:if="${successMessage}" th:text="${successMessage}"></p>
+            <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            <div class="mediumBlank"></div>
+            <p class = "bold">Liste des relations</p>
+            <ul>
+                <li th:each="connection : ${connections}">
+                    <span th:text="${connection.username}"></span> - <span th:text="${connection.email}"></span>
+                </li>
+            </ul>
+            <p class="bold">Crédit : <span th:text="${user.credit}"></span></p>
+        </div>
+        </div>
+        
+    </body>
+
+</html>

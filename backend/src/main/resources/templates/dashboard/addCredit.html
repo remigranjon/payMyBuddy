@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayMyBuddy - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="navigation">
+        <p>Pay my Buddy</p>
+        <div>
+            <a href="/transfer">Transférer</a>
+            <a href="/profile">Profil</a>
+            <a href="/connection" >Ajouter Relation</a>
+            <a href="/addCredit" class="selected">Ajouter Crédit</a>
+            <a href="/logout">Se Déconnecter</a>
+        </div>
+    </div>
+    <div class="mediumBlank"></div>
+    <div class="main column">
+        <form th:action="@{/addCredit}" th:object="${creditRequest}" method="post">
+            <label for="amount">Ajouter du crédit</label>
+            <div class="mediumBlank"></div>
+            <div class="row align-left">
+                <input type="number" step="1" id="amount" th:field="*{amount}" placeholder="Montant" class="authField" required />
+                <div class="mediumBlank"></div>
+                <button type="submit" class="button">Ajouter</button>
+            </div>
+        </form>
+        <p th:if="${successMessage}" th:text="${successMessage}"></p>
+        <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    </div>
+</body>
+
+</html>

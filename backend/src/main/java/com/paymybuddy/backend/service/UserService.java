@@ -113,4 +113,28 @@ public class UserService {
                     "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character");
         } */
     }
+
+    public void updatePassword(String username, String currentPassword, String newPassword) {
+        try {
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
+            if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+                throw new Exception("Current password is incorrect");
+            }
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } catch (Exception e) {
+            log.error("Error updating password for user {}: {}", username, e.getMessage());
+            throw new RuntimeException("Error updating password: " + e.getMessage());
+        }
+    }
+
+    public void addCredit(String username, double amount) throws Exception {
+        try {
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
+            user.setCredit(user.getCredit() + amount);
+            userRepository.save(user);
+        } catch (DataAccessException e) {
+            throw new Exception("Error updating user credit");
+        }
+    }
 }

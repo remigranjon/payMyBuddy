@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayMyBuddy - Register</title>
+    <title>PayMyBuddy - Login</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
+
 <body>
-    <form th:action="@{/auth/login}" th:object="${loginRequest}" method="post">
-
-    <label for="username">Email :</label>
-    <input type="email" id="username" th:field="*{username}" placeholder="Email" />
-    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" th:field="*{password}" placeholder="Mot de passe" />
-    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-
-    <button type="submit">Se connecter</button>
-</form>
+    <div class="main">
+        <div class="column authContainer">
+            <div th:replace="~{fragments/brand :: brandFragment}"></div>
+            <div class="mediumBlank"></div>
+            <form th:action="@{/auth/login}" th:object="${loginRequest}" method="post" class="column">
+                <input type="email" id="username" th:field="*{username}" placeholder="Mail" class="authField" />
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                <input type="password" id="password" th:field="*{password}" placeholder="Mot de passe"
+                    class="authField" />
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                <div class="mediumBlank"></div>
+                <button type="submit" class="authSubmit">Se connecter</button>
+                <div class="mediumBlank"></div>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>

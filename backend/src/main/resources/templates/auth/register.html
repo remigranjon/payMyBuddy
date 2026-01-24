@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayMyBuddy - Register</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
 </head>
+
 <body>
-    <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post">
-    <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" th:field="*{username}" placeholder="Nom d'utilisateur" />
-    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-
-    <label for="email">Email :</label>
-    <input type="email" id="email" th:field="*{email}" placeholder="Email" />
-    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" th:field="*{password}" placeholder="Mot de passe" />
-    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-
-    <button type="submit">S'inscrire</button>
-</form>
+    <div class="main">
+        <div class="column authContainer">
+            <div th:replace="~{fragments/brand :: brandFragment}"></div>
+            <div class="mediumBlank"></div>
+            <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post" class ="column">
+                <input type="text" id="username" th:field="*{username}" placeholder="Username" class="authField"/>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                
+                <input type="email" id="email" th:field="*{email}" placeholder="Mail" class="authField"/>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                
+                <input type="password" id="password" th:field="*{password}" placeholder="Mot de passe" class="authField"/>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                <div class="mediumBlank"></div>
+                <button type="submit" class="authSubmit">S'inscrire</button>
+                <div class="mediumBlank"></div>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
