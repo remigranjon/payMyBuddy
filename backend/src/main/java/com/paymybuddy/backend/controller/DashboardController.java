@@ -131,17 +131,16 @@ public class DashboardController {
 
     @PostMapping("/transfer")
     public String makeTransfer(@ModelAttribute("transactionRequest") TransactionRequest transactionRequest,
-            Model model, RedirectAttributes redirectAttributes) throws Exception {
+            Model model, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        
+        try {
             User user = userService.findByUsername(username);
             transactionService.saveTransaction(transactionRequest, user.getId().intValue());
             redirectAttributes.addFlashAttribute("successMessage", "Transfert effectué avec succès.");
-        // } catch (Exception e) {
-        //     redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        //     throw e;
-        // }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/transfer";
     }
 }

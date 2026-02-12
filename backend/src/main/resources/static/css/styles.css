@@ -119,3 +119,36 @@
 .euros::after {
     content: " €";
 }
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 8px;
+    text-align: left;
+}
+
+thead tr {
+    border-bottom: 2px solid #ccc;
+}
+
+tbody tr {
+    border-bottom: 2px solid #ccc;
+}
+
+table, th, td {
+    border: none;
+}
+
+.borderAround {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.marginHorizontal {
+    margin-left: 20px;
+    margin-right: 20px;
+}

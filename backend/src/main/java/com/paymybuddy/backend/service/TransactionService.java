@@ -1,7 +1,5 @@
 package com.paymybuddy.backend.service;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.backend.model.entity.Transaction;
@@ -15,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@Transactional
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserService userService;
@@ -39,14 +36,14 @@ public class TransactionService {
             transactionRepository.save(transaction);
         } catch (Exception e) {
             log.error("Error saving transaction: {}", e.getMessage());
-            throw e;
+            throw new RuntimeException("Error saving transaction");
         }
         try {
             userService.addCredit(sender.getUsername(), -transactionRequest.getAmount());
             userService.addCredit(receiver.getUsername(), transactionRequest.getAmount());
         } catch (Exception e) {
             log.error("Error updating sender credit: {}", e.getMessage());
-            throw e;
+            throw new RuntimeException("Error updating sender credit");
         }
         log.info("Transaction saved: {} -> {} : {}", sender.getUsername(), receiver.getUsername(),
                 transactionRequest.getAmount());
