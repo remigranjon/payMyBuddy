@@ -1,5 +1,7 @@
 package com.paymybuddy.backend.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.backend.model.entity.Transaction;
@@ -24,29 +26,36 @@ public class TransactionService {
 
     @Transactional
     public void saveTransaction(TransactionRequest transactionRequest, int senderId) throws Exception {
-        User sender = userService.findById(senderId);
-        User receiver = userService.findById(transactionRequest.getReceiverId());
-        Transaction transaction = Transaction.builder()
-                .sender(sender)
-                .receiver(receiver)
-                .amount(transactionRequest.getAmount())
-                .description(transactionRequest.getDescription())
-                .build();
         try {
-            transactionRepository.save(transaction);
-        } catch (Exception e) {
-            log.error("Error saving transaction: {}", e.getMessage());
-            throw new RuntimeException("Error saving transaction");
+            User sender = userService.findById(senderId);
+            User receiver = userService.findById(transactionRequest.getReceiverId());
+            Transaction transaction = Transaction.builder()
+                        .sender(sender)
+                        .receiver(receiver)
+                        .amount(transactionRequest.getAmount())
+                        .description(transactionRequest.getDescription())
+                        .build();
+            try {
+                transactionRepository.save(transaction);
+            } catch (Exception e) {
+                log.error("Error saving transaction: {}", e.getMessage());
+                throw new RuntimeException("Error saving transaction");
+            }
+            try {
+                userService.addCredit(sender.getUsername(), -transactionRequest.getAmount());
+                userService.addCredit(receiver.getUsername(), transactionRequest.getAmount());
+            } catch (Exception e) {
+                log.error("Error updating sender credit: {}", e.getMessage());
+                throw new RuntimeException("Error updating sender credit");
+            }    
+            log.info("Transaction saved: {} -> {} : {}", sender.getUsername(), receiver.getUsername(),
+                    transactionRequest.getAmount());
+        } catch (NoSuchElementException e) {
+            log.error("Error finding users: {}", e.getMessage());
+            throw new Exception("Error finding users");
         }
-        try {
-            userService.addCredit(sender.getUsername(), -transactionRequest.getAmount());
-            userService.addCredit(receiver.getUsername(), transactionRequest.getAmount());
-        } catch (Exception e) {
-            log.error("Error updating sender credit: {}", e.getMessage());
-            throw new RuntimeException("Error updating sender credit");
-        }
-        log.info("Transaction saved: {} -> {} : {}", sender.getUsername(), receiver.getUsername(),
-                transactionRequest.getAmount());
+        
+        
     }
 
     public Iterable<TransactionResponse> getTransactionsForUser(int userId) {

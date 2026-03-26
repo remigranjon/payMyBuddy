@@ -46,6 +46,7 @@ Cela restaure la base de données à partir du fichier de sauvegarde spécifié.
 | username          | VARCHAR(255)    | Pseudonyme de l'utilisateur (unique)               |
 | email             | VARCHAR(255)    | Adresse e-mail de l'utilisateur (unique)           |
 | password          | VARCHAR(255)    | Mot de passe de l'utilisateur                      |
+| credit            | DECIMAL(10,2)   | Crédit de l'utilisateur                            |
 
 ### Table transactions :
 | Nom de la colonne | Type de données | Description                                                                    |

@@ -6,6 +6,8 @@ import com.paymybuddy.backend.repository.interfaces.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -136,7 +138,7 @@ public class UserService {
         }
     }
 
-    public User findById(int senderId) {
+    public User findById(int senderId) throws NoSuchElementException{
         return userRepository.findById(senderId).orElseThrow();
     }
 }
